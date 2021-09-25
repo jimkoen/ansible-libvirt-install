@@ -1,0 +1,11 @@
+---
+- ansible.builtin.debug:
+    msg: "Reached 20.04.yml"
+
+- name: Install libvirt (qemu-kvm , libvirt-daemon-system)
+  ansible.builtin.apt:
+    name:
+      - qemu-kvm
+      - libvirt-daemon-system
+    state: present
+    update_cache: true

@@ -1,0 +1,5 @@
+---
+# defaults file for libvirt-install
+
+# Role control vars (used to determine asserts and omit tasks)
+libvirt_install_assert_hw_virtualization_support: true

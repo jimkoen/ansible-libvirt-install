@@ -1,0 +1,18 @@
+---
+# tasks file for libvirt-install
+
+- ansible.builtin.debug:
+    msg:
+      - "Host OS family: {{ ansible_facts.os_family }}"
+      - "Distribution: {{ ansible_facts.distribution }}"
+      - "Dist-Version: {{ ansible_facts.distribution_version }}"
+      - "Current search path : {{ ansible_search_path }}"
+      - "Current role path : {{ role_path }}"
+
+- ansible.builtin.include_tasks:
+    file: "{{ role_path }}/tasks/os_family/common.yml"
+
+- ansible.builtin.include_tasks:
+    file: '"{{ role_path }}/tasks/os_family/{{ ansible_facts.os_family }}/distributions/{{ ansible_facts.distribution }}/{{ ansible_facts.distribution_version }}.yml"'
+# todo: add support for FreeBSD
+# todo: add support for RHEL based systems

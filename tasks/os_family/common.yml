@@ -1,0 +1,13 @@
+---
+- name: Check if host system's CPU supports hardware virtualization.
+  block:
+    - ansible.builtin.shell: egrep -c '(vmx|svm)' /proc/cpuinfo
+      register: hw_virtualization_check
+      ignore_errors: true
+      failed_when: "hw_virtualization_check.stdout == ''"
+
+    - ansible.builtin.assert:
+        that:
+          - "(hw_virtualization_check.stdout | int < 1) == false"
+        fail_msg: "Hosts CPU architecture indicates it does not support virtualization (missing 'vmx' / 'svm' flag in /proc/cpuinfo)."
+  when: libvirt_install_assert_hw_virtualization_support == true
